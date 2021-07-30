@@ -2,6 +2,15 @@
 
 <p>This is the Blogging Website made using Django.</p>
 
+----
+
+## Technologies Used 👨🏽‍💻:
+1. Python
+2. Django
+3. Sqlite3 Database
+4. HTML, CSS, JavaScript
+5. Bootstrap
+
 ---
 
 ## Features 📋
@@ -27,14 +36,6 @@
 ### 4. SignIn and SignUp Page:
 <p align="center"><img src="Screenshots/sign_in.png" width="400" height="250"> <img src="Screenshots/sign_up.png" width="400" height="250"></p>
 
-----
-
-## Technologies Used 👨🏽‍💻:
-1. Python
-2. Django
-3. Sqlite3 Database
-4. HTML, CSS, JavaScript
-5. Bootstrap
 
 ----
 
