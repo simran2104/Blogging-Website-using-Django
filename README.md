@@ -1,4 +1,4 @@
-<h2 align="center">Blogging Website Using Django</h2>
+<h2 align="center">✍🏽 Blogging Website Using Django ✍🏽</h2>
 
 <p>This is the Blogging Website made using Django.</p>
 
