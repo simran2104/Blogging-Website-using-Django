@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% block title %} <title>Blog - Home</title> {% endblock title %}
+
+
+{% block header %}
+{% if request.user.is_active %}
+<header class="w3-container w3-center w3-padding-48 w3-white">
+    <h1 class="w3-xxxlarge"><b>{{ request.user.username }}</b></h1>
+    <h6>Welcome to the blog of <span class="w3-tag">{{ request.user.username }}'s world</span></h6>
+  </header>
+
+  {% else %}
+
+  <header class="w3-container w3-center w3-padding-48 w3-white">
+    <h1 class="w3-xxxlarge"><b>Blogging Website</b></h1>
+    <h6>Welcome to the blog of <span class="w3-tag">Awesome People!</span></h6>
+  </header>
+
+ {% endif %}
+  }
+{% endblock %}
+
+
+
+{% block register %}
+{% if request.user.is_active %}
+{% else %}
+<p class="w3-right"><a class="w3-button w3-green w3-border" href="{% url 'login' %}"><b><!-- LogIn  --><i class="fa fa-sign-in"></i></b></a></p>
+ <p class="w3-right"><a class="w3-button w3-red w3-border" href="{% url 'signup' %}" ><b><!-- Register  --><i class="fa fa-user-plus"></i></b></a></p>
+  {% endif %}
+ {% endblock %}
+
+
+
+
+
+
+ {% block blog %}
+<div class="w3-container w3-white w3-margin w3-padding-large">
+  {% for post in posts %}
+        <div class="w3-center">
+          <h3>{{ post.title }}</h3>
+          <h5>{{ post.author }}, <span class="w3-opacity">{{ post.created_on }} (UTC)</span></h5>
+        </div>
+
+        <div class="w3-justify">
+          <!-- <img src="/w3images/girl_hat.jpg" alt="Girl Hat" style="width:100%" class="w3-padding-16"> -->
+          <p>{{post.content}}</p>
+          {% if post.author == request.user %}
+
+          <p class="w3-right"><a class="w3-button w3-red" ><b><i class="fa fa-trash-o"></i></b></a></p>
+          <p class="w3-right"><a class="w3-button w3-orange" ><b><i class="fa fa-pencil-square-o"></i></b></a></p>
+          <p class="w3-clear"></p>
+
+         {% else %}
+
+          <p class="w3-left"><button class="w3-button w3-white w3-border like yes" id="like" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-up"></i> {{post.like}}</b></button><button class="w3-button w3-white w3-border unlike no" id="unlike" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-down"></i>{{post.unlike}}</b></button></p>
+          <p class="w3-clear"></p>
+
+          {% endif %}
+        
+        </div>
+    {% endfor %}
+      </div>
+
+
+{% endblock blog %}
+ {% block intro %}
+{% if request.user.is_active %}
+
+<!-- About/Information menu -->
+    <div class="w3-col l4">
+      <!-- About Card -->
+      <div class="w3-white w3-margin">
+        <!-- <img src="/w3images/avatar_girl2.jpg" alt="Jane" style="width:100%" class="w3-grayscale"> -->
+        <div class="w3-container w3-black">
+          <h4>{{ request.user.username }}</h4>
+          <p>Just me, myself and I, exploring the universe of uknownment. I have a heart of love and a interest of lorem ipsum and mauris neque quam blog. I want to share my world with you.</p>
+          <p class="w3-right"><a class="w3-button w3-red" href="{% url 'logout' %}"><b><!-- LogOut  --><i class="fa fa-sign-out"></i></b></a></p>
+          <p class="w3-left"><a class="w3-button w3-green" onclick="myFunction('demo1')" id="myBtn"><b><!-- Create New blog  --><i class="fa fa-plus"></i></b></a></p>
+          
+        </div>
+      </div>
+      <hr>
+
+{% endif %}
+{% endblock %}
