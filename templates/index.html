@@ -37,6 +37,10 @@
 
 
  {% block blog %}
+
+
+
+
 <div class="w3-container w3-white w3-margin w3-padding-large">
   {% for post in posts %}
         <div class="w3-center">
@@ -49,16 +53,73 @@
           <p>{{post.content}}</p>
           {% if post.author == request.user %}
 
-          <p class="w3-right"><a class="w3-button w3-red" ><b><i class="fa fa-trash-o"></i></b></a></p>
-          <p class="w3-right"><a class="w3-button w3-orange" ><b><i class="fa fa-pencil-square-o"></i></b></a></p>
-          <p class="w3-clear"></p>
+          
+          <form method="post">
+          {% csrf_token %}
+          <p class="w3-right">
+          <button class="w3-button w3-red" type="submit" value="delete" name={{post.id}}><b><i class="fa fa-trash-o"></i></b></button></p>
+        </form>
+
+<p class="w3-right"><button class="w3-button w3-orange" id="myBtn" data-toggle="modal" data-target="#mModal"><b><i class="fa fa-pencil-square-o"></i></b></button></p>
+
+          <form method="post">
+                        {% csrf_token %}
+
+                          <!-- Modal -->
+                          <div class="modal fade" id="mModal" role="dialog">
+                            <div class="modal-dialog">
+                            
+                              <!-- Modal content-->
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  <h4 class="modal-title" style="color: black;">Modify Blog</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <form>
+                                  <div class="form-group">
+                                                <label for="title" class="col-form-label" style="color: black;">Title</label>
+                                                <input type="text" class="form-control" id="title"
+                                                    name="title" value="{{ post.title }}" required>
+
+                                                <label for="content" class="col-form-label" style="color: black;">Content</label>
+                                                <textarea type="text" class="form-control" id="content"
+                                                    name="content" rows="20" cols="50" required>{{ post.content }}</textarea>
+
+                                               <label for="modify" class="col-form-label" style="color: black;">Modify</label>
+                                                <input type="radio"  id="modify"
+                                                    name="modify" required>
+                                    </div>
+                                  </form>
+                                </div>
+                                <div class="modal-footer">
+                                  <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal" style="color: black;">Close</button>
+                                  <button type="Submit" class="btn btn-primary" style="background-color: #c23232;">Modify Blog</button>
+                                </div>
+                              </div>
+                              
+                            </div>
+                          </div>
+
+                    </form>
+          
+<p class="w3-clear"></p>
 
          {% else %}
 
-          <p class="w3-left"><button class="w3-button w3-white w3-border like yes" id="like" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-up"></i> {{post.like}}</b></button><button class="w3-button w3-white w3-border unlike no" id="unlike" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-down"></i>{{post.unlike}}</b></button></p>
+          <p class="w3-left">
+          <button class="w3-button w3-white w3-border like yes" type="submit" id="like" value="delete" name={{post.id}}><b><i class="fa fa-thumbs-up"></i> {{post.like}}</b></button></p>
+
+
+          <p class="w3-left">
+            <button class="w3-button w3-white w3-border unlike no" id="unlike" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-down"></i>{{post.unlike}}</b></button>
+        </p>
           <p class="w3-clear"></p>
 
           {% endif %}
+
+          <p class="w3-clear"></p>
         
         </div>
     {% endfor %}
@@ -66,7 +127,17 @@
 
 
 {% endblock blog %}
+
+
  {% block intro %}
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
 {% if request.user.is_active %}
 
 <!-- About/Information menu -->
@@ -78,7 +149,49 @@
           <h4>{{ request.user.username }}</h4>
           <p>Just me, myself and I, exploring the universe of uknownment. I have a heart of love and a interest of lorem ipsum and mauris neque quam blog. I want to share my world with you.</p>
           <p class="w3-right"><a class="w3-button w3-red" href="{% url 'logout' %}"><b><!-- LogOut  --><i class="fa fa-sign-out"></i></b></a></p>
-          <p class="w3-left"><a class="w3-button w3-green" onclick="myFunction('demo1')" id="myBtn"><b><!-- Create New blog  --><i class="fa fa-plus"></i></b></a></p>
+
+          <p class="w3-left"><button class="w3-button w3-green" id="myBtn" data-toggle="modal" data-target="#myModal"><b><!-- Create New blog  --><i class="fa fa-plus"></i></b></button></p>
+
+          <form method="post">
+                        {% csrf_token %}
+
+                          <!-- Modal -->
+                          <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog">
+                            
+                              <!-- Modal content-->
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  <h4 class="modal-title" style="color: black;">New Blog</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <form>
+                                  <div class="form-group">
+                                                <label for="title" class="col-form-label" style="color: black;">Title</label>
+                                                <input type="text" class="form-control" id="title"
+                                                    name="title" required>
+
+                                                <label for="content" class="col-form-label" style="color: black;">Content</label>
+                                                <textarea type="text" class="form-control" id="content"
+                                                    name="content" rows="20" cols="50" required></textarea>
+                                    </div>
+                                  </form>
+                                </div>
+                                <div class="modal-footer">
+                                  <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal" style="color: black;">Close</button>
+                                  <button type="Submit" class="btn btn-primary" style="background-color: #c23232;">Upload Blog</button>
+                                </div>
+                              </div>
+                              
+                            </div>
+                          </div>
+
+                    </form>
+
+
+          
           
         </div>
       </div>
@@ -86,3 +199,10 @@
 
 {% endif %}
 {% endblock %}
+
+
+
+
+
+
+
